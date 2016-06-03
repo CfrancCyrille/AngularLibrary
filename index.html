@@ -1,5 +1,5 @@
  <!DOCTYPE html>
-<html ng-app="libraryStore">
+<html ng-app="LibraryStore">
     <head>
 		<meta charset="utf-8">
         <title>Library</title>
@@ -8,27 +8,62 @@
     </head>
     <body ng-controller="LibraryController as libraryVal">
         <h1>My library</h1>
+		<div ng-init="totalPrice=0" ng-controller="tabController as panel">
+			<nav class="nav nav-pills" ng-init="tab=0">
+				<li><a>Library</a></li>
+				<li><a>Reviews</a></li>
+				<div class="panier">
+				    <p><a ng-click="" class="glyphicon glyphicon-shopping-cart">Mon panier contient : {{panel.panier}}</a></p>
+					<p ng-init="totalPrice=0">Total £{{panel.totalPrice}}</p>
+				</div>
+			</nav>
 
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Author</th>
-					<th>Price</th>
-					<th>Date</th>
-					<th>Button</th>
-				</tr>
-			</thead>
-			<tbody ng-repeat="book in libraryVal.books | orderBy : '-price' : reverse">
-				<tr>
-					<td>{{ book.name | uppercase }}</td>
-					<td>{{ book.author }}</td>
-					<td>{{ book.price | currency : '£' : 1 }}</td>
-					<td>{{ book.date | date : "dd-MM-yyyy" }}</td>
-					<td><button ng-show="book.canPurchase" ng-click="actionClick">Add to card</button></td>
-				</tr>
-			</tbody>
-		</table>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Picture</th>
+						<th>Name</th>
+						<th>Author</th>
+						<th>Price</th>
+						<th>Date</th>
+						<th>Button</th>
+					</tr>
+				</thead>
+				<tbody ng-repeat="book in libraryVal.books | orderBy : '-price' : reverse">
+					<tr>
+						<td><img ng-src="{{book.images}}" resize/></td>
+						<td>
+							<p>{{ book.name | uppercase }}</p>
+							<section ng-controller="navController as navPan" ng-init="tabOne=0" >
+								<ul class="nav nav-pills">
+									<li ng-class="{ active: navPan.isSelected(1) }">
+										<a href ng-click="navPan.selectTab(1)">Description</a>
+									</li>
+									<li ng-class="{ active: navPan.isSelected(2) }">
+										<a href ng-click="navPan.selectTab(2)">Spécifications</a>
+									</li>
+									<li ng-class="{ active: navPan.isSelected(3) }">
+										<a href ng-click="navPan.selectTab(3)">Reviews</a>
+									</li>
+									<li><a>{{navPan.tabOne}}</a></li>
+								</ul>
+								<div class="panel" ng-show="navPan.isSelected(1)">
+									<h4>Description</h4>
+									<p>{{book.description}}</p>
+								</div>
+							</section>
+						</td>
+						<td>{{ book.author }}</td>
+						<td>{{ book.price | currency : '£' : 1 }}</td>
+						<td>{{ book.date | date : "dd-MM-yyyy" }}</td>
+						<td><button class="glyphicon glyphicon-plus action-button shadow animate green" ng-click="panel.addPanier(book)" ng-show="book.canPurchase">Add to card</button></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+
+
 
 
 			<!-- Image Gallery -->
@@ -40,8 +75,6 @@
 					</li>
 				</ul>
 			</div>-->
-
-
         <script type="application/javascript" src="js/angular.min.js"></script>
         <script type="application/javascript" src="js/app.js"></script>
     </body>

@@ -21,3 +21,42 @@
   border: 1px solid black;
   background: white;
 }
+
+
+.panier {
+	float: right;
+}
+
+
+.green
+{
+	background-color: #82BF56;
+	border-bottom: 2px solid #669644;
+	text-shadow: 0px -2px #669644;
+}
+
+.animate
+{
+	transition: all 0.1s;
+	-webkit-transition: all 0.1s;
+}
+
+.action-button
+{
+	position: relative;
+	padding: 5px 10px;
+	margin: 0px 5px 5px 0px;
+	float: left;
+	border-radius: 2px;
+	font-family: 'Pacifico', cursive;
+	font-size: 12px;
+	color: #FFF;
+	text-decoration: none;
+}
+
+.action-button:active
+{
+	transform: translate(0px,5px);
+  -webkit-transform: translate(0px,5px);
+	border-bottom: 1px solid;
+}
