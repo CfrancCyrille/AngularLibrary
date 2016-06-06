@@ -11,10 +11,14 @@
 		<div ng-init="totalPrice=0" ng-controller="tabController as panel">
 			<nav class="nav nav-pills" ng-init="tab=0">
 				<li><a>Library</a></li>
-				<li><a>Reviews</a></li>
-				<div class="panier">
-				    <p><a ng-click="" class="glyphicon glyphicon-shopping-cart">Mon panier contient : {{panel.panier}}</a></p>
-					<p ng-init="totalPrice=0">Total £{{panel.totalPrice}}</p>
+				<li><a>Panier</a></li>
+				<div class="panier" ng-init="valuePanier=false" ng-controller="panierController as panier">
+                    <p><a data-icon="&#x25c8;"></a><a ng-init="numberTotalPanier=0" ng-click="panier.changeValuePanier()" class="glyphicon glyphicon-shopping-cart">Mon panier contient : {{panel.numberTotalPanier}}</a></p>
+                    <div ng-show="panier.displayPanier(true)">
+                        <p ng-repeat="(key, value) in panel.panier track by $index">{{value}}</p>
+                        <!--<p>{{panel.panier}}</p>-->
+                        <p ng-init="totalPrice=0">Total £{{panel.totalPrice}}</p>
+                    </div>
 				</div>
 			</nav>
 
@@ -45,36 +49,26 @@
 									<li ng-class="{ active: navPan.isSelected(3) }">
 										<a href ng-click="navPan.selectTab(3)">Reviews</a>
 									</li>
-									<li><a>{{navPan.tabOne}}</a></li>
 								</ul>
 								<div class="panel" ng-show="navPan.isSelected(1)">
 									<h4>Description</h4>
 									<p>{{book.description}}</p>
+								</div>
+								<div ng-show="navPan.isSelected(3)">
+									<button>Add a commentary</button>
 								</div>
 							</section>
 						</td>
 						<td>{{ book.author }}</td>
 						<td>{{ book.price | currency : '£' : 1 }}</td>
 						<td>{{ book.date | date : "dd-MM-yyyy" }}</td>
-						<td><button class="glyphicon glyphicon-plus action-button shadow animate green" ng-click="panel.addPanier(book)" ng-show="book.canPurchase">Add to card</button></td>
+                        <td><button class="glyphicon glyphicon-plus action-button shadow animate green" ng-click="panel.addPanier(book)" ng-show="book.canPurchase">Add to card</button></td>
+
 					</tr>
 				</tbody>
 			</table>
 		</div>
 
-
-
-
-
-			<!-- Image Gallery -->
-			<!--<div class='gallery' ng-show="productImage.images.length">
-				<img ng-src="{{productImage.images[0]}}" />
-				<ul class="list-inline thumbs">
-					<li class="thumbnail" ng-repeat="image in productImage.images">
-						<img ng-src="{{image}}" />
-					</li>
-				</ul>
-			</div>-->
         <script type="application/javascript" src="js/angular.min.js"></script>
         <script type="application/javascript" src="js/app.js"></script>
     </body>
